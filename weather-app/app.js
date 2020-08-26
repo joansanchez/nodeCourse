@@ -23,9 +23,17 @@ function location(place){
     var url = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + place + '.json?access_token=pk.eyJ1Ijoiam9hbnNhbmNoZXoiLCJhIjoiY2tlYm9tZXdqMGF5dTJxcDhhZ295ZjUzaCJ9.SjE8BlveLn2YQRF5kV7UVA&limit=1'
     
     request({url: url, json: true}, (error, response) => {
-        const center = response.body.features[0].center
-        url = 'http://api.weatherstack.com//current?access_key=31a22aa7a31c6a84b27ddf03131f7a63&query=' + center[1] + ',' + center[0]
-        weather(url)
+        if (error){
+            console.log('No se ha establecido conexión con el servidor')
+        }
+        else if (!response.body.features){
+            console.log('Ningún resultado coincide con su búsqueda')
+        }
+        else {
+            const center = response.body.features[0].center
+            url = 'http://api.weatherstack.com//current?access_key=31a22aa7a31c6a84b27ddf03131f7a63&query=' + center[1] + ',' + center[0]
+            weather(url)
+        }
     })
 }
 
