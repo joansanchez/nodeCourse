@@ -1,5 +1,7 @@
 const request = require('postman-request')
 const yargs = require('yargs')
+const geocode = require('./utils/geocode')
+const forecast = require('./utils/forecast')
 
 yargs.version('1.1.0')
 
@@ -14,39 +16,31 @@ yargs.command({
         }
     },
     handler(argv){
-        location(argv.title)
+        test(argv.title)
     }
 })
 yargs.parse()
 
-function location(place){
-    var url = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + place + '.json?access_token=pk.eyJ1Ijoiam9hbnNhbmNoZXoiLCJhIjoiY2tlYm9tZXdqMGF5dTJxcDhhZ295ZjUzaCJ9.SjE8BlveLn2YQRF5kV7UVA&limit=1'
-    
-    request({url: url, json: true}, (error, response) => {
+
+function test (place){
+    geocode(place, (error, data) => {
         if (error){
-            console.log('No se ha establecido conexión con el servidor')
+            console.log(error)
         }
-        else if (!response.body.features){
-            console.log('Ningún resultado coincide con su búsqueda')
-        }
-        else {
-            const center = response.body.features[0].center
-            url = 'http://api.weatherstack.com//current?access_key=31a22aa7a31c6a84b27ddf03131f7a63&query=' + center[1] + ',' + center[0]
-            weather(url)
+        else{
+            forecast(data.longitude, data.latitude, (error, data) => {
+                if (error){
+                    console.log(error)
+                }
+                else{
+                    console.log('Tiempo en ' + data.name + ', ' + data.country)
+                    console.log(data.description)
+                    console.log('Actualmente la temperatura es de ' + data.temperature + ' y el riesgo de precipitación es de ' + data.precip + '%')
+                }
+            })
         }
     })
 }
 
 
-
-function weather(url){
-    request({url: url, json: true}, (error, response) => {
-        const place = response.body.location
-        console.log('Tiempo en ' + place.name + ', ' + place.country)
-        const body = response.body.current
-        console.log(body.weather_descriptions[0])
-        console.log('Actualmente la temperatura es de ' + body.temperature + ' y el riesgo de precipitación es de ' + body.precip + '%')
-        
-    })
-}
 
