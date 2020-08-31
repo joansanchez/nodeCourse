@@ -9,17 +9,17 @@ if (!place){
     return console.log('Proporcione una dirección')
 }
 
-geocode(place, (error, data) => {
+geocode(place, (error, {longitude, latitude}) => {
     if (error) {
         return console.log(error)
     }
-    forecast(data.longitude, data.latitude, (error, forecastData) => {
+    forecast(longitude, latitude, (error, {name, country, description, temperature, precip}) => {
         if (error) {
             return console.log(error)
         }
-        console.log('Tiempo en ' + forecastData.name + ', ' + forecastData.country)
-        console.log(forecastData.description)
-        console.log('Actualmente la temperatura es de ' + forecastData.temperature + ' y el riesgo de precipitación es de ' + forecastData.precip + '%')
+        console.log('Tiempo en ' + name + ', ' + country)
+        console.log(description)
+        console.log('Actualmente la temperatura es de ' + temperature + ' y el riesgo de precipitación es de ' + precip + '%')
     })
 })
 
