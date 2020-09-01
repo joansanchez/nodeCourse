@@ -3,22 +3,30 @@ const express = require('express')
 
 const app = express()
 
-app.use(express.static(path.join(__dirname, '../public')))
+app.set('view engine', 'hbs')
+app.use(express.static(path.join(__dirname, '../public'))) //Directiva para indicar al servidor que debe de cargar esta carpeta
 
-//app.get('', (req, res) => {
-//    res.send('test')
+app.get('', (req, res) => {
+    res.render('index', {
+        title: 'Weather App',
+        name: 'Joan'
+    })  //allow us to render one of our hbs views (name of the view to render, object con los elementos a inyectar en la view)
 
-//}) //especifica que debemos hacer cunado llega una petición a un recurso determinado (ruta, función(request, response))
+}) //especifica que debemos hacer cunado llega una petición a un recurso determinado (ruta, función(request, response))
 
 app.get('/help', (req, res) => {
-    res.send({
+    res.render('help', {
+        title: 'Help site',
         name: 'Joan',
-        edad: 22
+        message: 'In case of needing help send an email to ...'
     })
 })
 
 app.get('/about', (req, res) => {
-    res.send('About page')
+    res.render('about', {
+        title: 'About me',
+        name: 'Joan'
+    })
 })
 
 app.get('/weather', (req, res) => {
