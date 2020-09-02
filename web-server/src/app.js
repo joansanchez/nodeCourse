@@ -1,10 +1,21 @@
 const path = require('path')
 const express = require('express')
+const hbs = require('hbs')
 
 const app = express()
 
+//Define Paths for express config
+const publicDirectoryPath = path.join(__dirname, '../public')
+const viewsPath = path.join(__dirname, '../templates/views') //hbs por defecto busca las views en root/views, si nosotros queremos que la carpeta tenga otro nombre tenemos que especificarlo 
+const partialsPath = path.join(__dirname, '../templates/partials')
+
+//Setup handlebars engine and views location
 app.set('view engine', 'hbs')
-app.use(express.static(path.join(__dirname, '../public'))) //Directiva para indicar al servidor que debe de cargar esta carpeta
+app.set('views', viewsPath)
+hbs.registerPartials(partialsPath)
+
+//set up static directory to serve
+app.use(express.static(publicDirectoryPath)) //Directiva para indicar al servidor que debe de cargar esta carpeta
 
 app.get('', (req, res) => {
     res.render('index', {
