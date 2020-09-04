@@ -48,11 +48,11 @@ app.get('/weather', (req, res) => {
             error: 'No address has been provided'
         })
     }
-    geocode(req.query.address, (error, {longitude, latitude}) => {
+    geocode(req.query.address, (error, {longitude, latitude} = {}) => {
         if (error) {
             return res.send({ error }) 
         }
-        forecast(longitude, latitude, (error, {name, country, description, temperature, precip}) => {
+        forecast(longitude, latitude, (error, {name, country, description, temperature, precip} ) => {
             if (error) {
                 return res.send({ error }) 
             }

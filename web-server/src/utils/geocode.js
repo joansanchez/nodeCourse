@@ -7,7 +7,7 @@ const geocode = (place, callback) => {
         if (error){
             callback('No se ha establecido conexión con el servidor', undefined)
         }
-        else if (!body.features){
+        else if (!body.features[0]){
             callback('Ningún resultado coincide con su búsqueda', undefined)
         }
         else {
