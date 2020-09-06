@@ -5,6 +5,7 @@ const geocode = require('./utils/geocode')
 const forecast = require('./utils/forecast')
 
 const app = express()
+const port = process.env.PORT || 3000
 
 //Define Paths for express config
 const publicDirectoryPath = path.join(__dirname, '../public')
@@ -95,6 +96,6 @@ app.get('*', (req, res) => { //match anything that has not been match yet
     })
 })
 
-app.listen(3000, () => {
-    console.log('Server is up on port 3000') // esto se muestra en los logs del rever
+app.listen(port, () => {
+    console.log('Server is up on port ' + port) // esto se muestra en los logs del rever
 }) //inicia el server y le indica que escuche en el puerto 3000
