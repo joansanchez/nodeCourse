@@ -25,13 +25,14 @@ app.listen(port, () => {
 
 
 
-const bycript = require('bcryptjs')
-const myFunction = async () => {
-    const password = 'Red12345!'
-    const hashedPassword = await bycript.hash(password, 8)
+const jwt = require('jsonwebtoken')
 
-    console.log(password);
-    console.log(hashedPassword);
+const myFunction = async () => {
+    const token = jwt.sign({ _id: 'abc123' }, 'thisismynewcourse', { expiresIn: '7 days'})
+    console.log(token)
+
+    const data = jwt.verify(token, 'thisismynewcourse')
+    console.log(data);
 }
 
 myFunction()
