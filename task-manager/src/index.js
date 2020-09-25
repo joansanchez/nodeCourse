@@ -10,6 +10,11 @@ const taskRouter = require('./routers/task')
 const app = express()
 const port = process.env.PORT || 3000
 
+//adding glogal middleware functions:    new request -> midxdleware function -> run route handler 
+/* app.use((req, res, next) => {
+    res.status(503).send('Site under maintainance, please come back soon')    
+}) */
+
 //congiguration server options
 app.use(express.json())
 
@@ -25,7 +30,7 @@ app.listen(port, () => {
 
 
 
-const jwt = require('jsonwebtoken')
+/* const jwt = require('jsonwebtoken')
 
 const myFunction = async () => {
     const token = jwt.sign({ _id: 'abc123' }, 'thisismynewcourse', { expiresIn: '7 days'})
@@ -35,4 +40,4 @@ const myFunction = async () => {
     console.log(data);
 }
 
-myFunction()
+myFunction() */
