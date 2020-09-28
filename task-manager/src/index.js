@@ -5,6 +5,8 @@ require('./db/mongoose')
 //Internal modules requirements
 const userRouter = require('./routers/user')
 const taskRouter = require('./routers/task')
+const Task = require('./models/task')
+const User = require('./models/user')
 
 //Express server config
 const app = express()
@@ -28,16 +30,13 @@ app.listen(port, () => {
 })
 
 
+/* const main = async () => {
+    const task = await Task.findById('5f7196ee344ec12bb8e7f7d2')
+    await task.populate('author').execPopulate()
+    console.log(task.author);
 
-
-/* const jwt = require('jsonwebtoken')
-
-const myFunction = async () => {
-    const token = jwt.sign({ _id: 'abc123' }, 'thisismynewcourse', { expiresIn: '7 days'})
-    console.log(token)
-
-    const data = jwt.verify(token, 'thisismynewcourse')
-    console.log(data);
+    const user = await User.findById('5f71964a66def11b242e6c26')
+    await user.populate('tasks').execPopulate()
+    console.log(user.tasks)
 }
-
-myFunction() */
+main() */
